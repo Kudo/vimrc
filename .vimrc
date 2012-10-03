@@ -88,7 +88,7 @@ endif
 "
 set background=dark
 syntax on
-"set t_Co=256
+set t_Co=256
 hi Comment     term=reverse ctermfg=darkcyan
 hi Search      term=reverse ctermbg=4 ctermfg=7
 
@@ -212,10 +212,14 @@ let Tlist_Compact_Format = 1
 let Tlist_Exit_OnlyWindow = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_File_Fold_Auto_Close = 1
-nnoremap TT :TlistToggle<CR>
-map <F5> :TlistToggle<CR>
-imap <F5> <c-o>:TlistToggle<CR>
+map <C-t> :TlistToggle<CR>
+imap <C-t> <c-o>:TlistToggle<CR>
 
 "
 " NERD_Tree
 map <C-o>   :NERDTreeToggle<CR>
+
+"
+" Easy Motion
+let mapleader=","
+let g:mapleader=","
