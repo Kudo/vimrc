@@ -1,106 +1,32 @@
 "
 " vimrc
+" By Kudo
 "
-
+" Reference
+" http://www.lichihua.com/2006/files/vimrc.html
+" http://edt1023.sayya.org/vim/node10.html
+" https://github.com/beards/vimrc
 "
-" vim-pathogen
-"
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
-
-
-"
-" basic
-"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Basic Options
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
+set backspace=indent,eol,start         " allow backspacing over everything in insert mode
 set history=50
 set showcmd
-set nomodeline      "ignore mode implication
-set backspace=indent,eol,start      " allow backspacing over everything in insert mode
-
-autocmd! bufwritepost .vimrc source ~/.vimrc " auto reload vimrc when editing it
-
-" When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid or when inside an event handler
-" (happens when dropping a file on gvim).
-autocmd BufReadPost *
-  \ if line("'\"") > 0 && line("'\"") <= line("$") |
-  \   exe "normal g`\"" |
-  \ endif
-
-
-"
-" encoding / format
-"
-if has("multi_byte")
-  set fileencodings=utf-8,big5,cp950,gbk,cp936,iso-2022-jp,sjis,euc-jp,japan,euc-kr,ucs-bom,utf-bom,latin1,iso8859-1
-  set fileencoding=utf-8
-else
-  set enc=taiwan
-  set fileencoding=taiwan
-endif
-set fileformats=unix,dos,mac    "read variant
-set fileformat=unix             "write unix
-
-
-"
-" indent
-"
-"set tabstop=8
-set shiftwidth=4
-set softtabstop=4
-set expandtab       "use space instead of tab
-set autoindent
-set smartindent
-
-filetype on
-filetype indent on
-filetype plugin on
-autocmd FileType Makefile set noexpandtab    "disable tab replacement on Makefile
-
-
-"
-" folding
-"
-set foldmethod=indent
-set foldlevel=3
-set foldnestmax=3
-
-
-"
-" search
-"
-set incsearch       "highlight while typing
-set hlsearch        "highlight search result
-set smartcase       "ignore case if search pattern is all lowercase,case-sensitive otherwise
-
-
-"
-" theme / color / syntax
-"
-set background=dark
-syntax on
-colorscheme torte
-"set t_Co=256
-
-
-"
-" markup
-"
-set number          "line number
+set nowrap
+set nonumber
 set ruler
-set showmatch       "show bracket matching
-set nocursorline
-set laststatus=2    "always show status 
+set nomodeline
+"set nocursorline
+set laststatus=2
 set statusline=\ %{HasPaste()}%-20.(%f\ %m%r%h\ %w%)\ 
 set statusline+=\ %<%30(\ \ \ %{hostname()}:%{CurDir()}%)\ 
 set statusline+=%=\ [%c%V,\ %l/%L]\ [%{&ff}/%{&fileencoding}/%Y]
-
 function! CurDir()
     let curdir = substitute(getcwd(), $HOME, "~", "")
     return curdir
 endfunction
-
 function! HasPaste()
     if &paste
         return '[PASTE]'
@@ -111,75 +37,173 @@ endfunction
 
 
 "
-" sudo write command
+" Encoding
+set ffs=unix,dos,mac
+set ff=unix
+if has("multi_byte")
+  set encoding=utf-8
+  set fileencodings=utf-8,big5,cp950,gbk,cp936,iso-2022-jp,sjis,euc-jp,japan,euc-kr,ucs-bom,utf-bom,latin1,iso8859-1
+  set termencoding=utf-8
+  " for Big5 environment
+  " set termencoding=big5
+  " set fileencoding=big5
+else
+  set enc=taiwan
+  set fileencoding=taiwan
+endif
+
 "
-command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
-command! Wq :execute ':W' | :q
-
+" Indent
+"set tabstop=8
+set shiftwidth=4
+set softtabstop=4
+set expandtab       "use space instead of tab
+set autoindent
+set smartindent
+filetype on
+filetype indent on
+filetype plugin on
 
 "
-" key mappings
+" Folding
 "
-set <F1>=[11~
-set <F2>=[12~
-set <F3>=[13~
-set <F4>=[14~
-let mapleader=","
+set foldmethod=indent
+set foldlevel=3
+set foldnestmax=3
 
-" help
-nnoremap <silent> <F1> :call Help()<CR>
-imap <F1> <Esc><F1>
+"
+" Search
+"
+set incsearch       "highlight while typing
+set hlsearch        "highlight search result
+set smartcase       "ignore case if search pattern is all lowercase,case-sensitive otherwise
 
-let g:last_help_keyword = ''
-function! Help()
-  echo match(expand("<cWORD>"), g:last_help_keyword)
-  if &buftype=="help" && match(expand("<cWORD>"), g:last_help_keyword)>0
-    bw
-  else
-    try
-      let g:last_help_keyword=expand("<cWORD>")
-      exec "help ".g:last_help_keyword
-    catch /:E149:\|:E661:/
-      " E149 no help for <subject>
-      " E661 no <language> help for <subject>
-      let g:last_help_keyword=expand("<cword>")
-      exec "help ".expand("<cword>")
-    endtry
-  endif
-endfunc
+"
+" Terminal
+"set   term=xterm-color
+if &term =~ "xterm"
+  set ttymouse=xterm2                  
+endif
+
+"
+set background=dark
+syntax on
+"set t_Co=256
+hi Comment     term=reverse ctermfg=darkcyan
+hi Search      term=reverse ctermbg=4 ctermfg=7
 
 
-" for splits
-map <C-J> <C-W>j
-map <C-K> <C-W>k
-map <c-h> <c-w>h
-map <c-l> <c-w>l
-map <F6> <c-w>w
-imap <F6> <c-o><c-w>w
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Key Binding
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <C-a>      0
+map <C-e>      $
+map <C-u>      :set fileencoding=utf-8<CR>
+map <C-b>      :set fileencoding=big5<CR>
 
-" for mouse selection / paste
-map <F2> :set nu! paste!<CR>
-set pastetoggle=<F2>
 
-" search next/previous
-set <s-F3>=[25~
-map <F3> n
-map <s-F3> N
-imap <F3> <c-o>n
-imap <s-F3> <c-o>N
-map <F4> :set hls!<BAR>set hls?<CR>
-imap <F4> <c-o>:set hls!<BAR>set hls?<CR>
+" Tab for vim7
+"set showtabline=1
+map <C-d>      :tabc<CR>       
+map <S-Left>   :tabp<CR>
+map <S-Right>  :tabn<CR>
+
+map <F2>       :set mouse=a<CR>
+map <F3>       :set mouse=<CR>
+"" Toggle on/off paste mode，在 insert mode 要設 pastetoggle 才能生效。
+map <F5> :set paste!<BAR>set paste?<CR>
+set pastetoggle=<F5>
+map <F8> :%!xxd<CR>                    " 16 進位編輯
+map <F9> :%!xxd -r<CR>         " 取消 16 進位編輯
 
 " allow multiple indentation/deindentation in visual mode
 vnoremap < <gv
 vnoremap > >gv
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"縮寫
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+iabbrev #b /****************************************
+iabbrev #e <Space>****************************************/
+iabbrev #m // --------------------------------------
+iabbrev xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Text autocmd
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType text setlocal textwidth=78
+
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
+ 
+"
+" Misc
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType xhtml set omnifunc=xhtmlcomplete#CompleteTags
+autocmd FileType html,xhtml setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType c set omnifunc=ccomplete#Complete
+autocmd FileType Makefile set noexpandtab    "disable tab replacement on Makefile
 
 "
-" Taglist variables
-" (require exuberant-ctags: http://ctags.sourceforge.net/
-"  use 'sudo apt-get install exuberant-ctags' to install)
+" Ruby
+autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+ 
 "
+" CSS
+autocmd FileType css setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
+
+"
+" PHP
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+set foldmethod=syntax
+let php_folding=2
+ 
+"
+" Perl
+" highlight advanced perl vars inside strings
+let perl_extended_vars=1
+
+" Javascript
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+let javascript_enable_domhtmlcss=1
+
+"
+" Python
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType python setlocal expandtab smarttab autoindent shiftwidth=4 tabstop=4 softtabstop=4
+autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``            " Auto trim tail space
+" python.vim: syntax highlight
+"autocmd FileType python set complete+=k~/.vim/syntax/python.vim isk+=.,(
+" help key mapping
+"autocmd FileType python map <F1> K
+"autocmd FileType python imap <F1> <ESC>K
+" flake8: ignore E501 line too long
+let g:flake8_ignore="E501,W391"
+" auto complete
+"let g:pydiction_location='~/.vim/bundle/pydiction/complete-dict'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" vim-pathogen
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+call pathogen#infect()
+ 
+"
+" Taglist
 let g:ctags_statusline=1        " Display function name in status bar
 let generate_tags=1             " Automatically start script
 let Tlist_Use_Horiz_Window=0    " Displays taglist results in a vertical window
@@ -188,50 +212,10 @@ let Tlist_Compact_Format = 1
 let Tlist_Exit_OnlyWindow = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_File_Fold_Auto_Close = 1
-nnoremap TT :TlistToggle<CR>    
+nnoremap TT :TlistToggle<CR>
 map <F5> :TlistToggle<CR>
 imap <F5> <c-o>:TlistToggle<CR>
 
-
 "
-" Nerd Tree
-"
-map <F8> :NERDTree<CR>
-imap <F8> <c-o>:NERDTree<CR>
-
-
-"
-" python
-"
-" python.vim: syntax highlight
-autocmd FileType python set complete+=k~/.vim/syntax/python.vim isk+=.,(
-" help key mapping
-autocmd FileType python map <F1> K
-autocmd FileType python imap <F1> <ESC>K
-" flake8: ignore E501 line too long
-let g:flake8_ignore="E501,W391"
-" auto complete
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-"let g:pydiction_location='~/.vim/bundle/pydiction/complete-dict'
-
-
-"
-" php
-"
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-set foldmethod=syntax
-let php_folding=2
-
-
-"
-" set screen title
-"
-set titlestring=%t%(\ %M%)
-if &term == "screen" || &term == "screen-bce"
-  set t_ts=k
-  set t_fs=\
-endif
-if &term == "screen" || &term == "screen-bce" || &term == "xterm"
-  set title
-endif
-
+" NERD_Tree
+map <C-o>   :NERDTreeToggle<CR>
