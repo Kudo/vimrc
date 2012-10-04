@@ -223,3 +223,7 @@ map <C-o>   :NERDTreeToggle<CR>
 " Easy Motion
 let mapleader=","
 let g:mapleader=","
+
+"
+" Powerline
+let g:Powerline_symbols = 'fancy'        " Require patched font "
