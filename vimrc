@@ -203,22 +203,12 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
  
 "
-" Taglist
-let g:ctags_statusline=1        " Display function name in status bar
-let generate_tags=1             " Automatically start script
-let Tlist_Use_Horiz_Window=0    " Displays taglist results in a vertical window
-let Tlist_Use_Right_Window = 1
-let Tlist_Compact_Format = 1
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_GainFocus_On_ToggleOpen = 1
-let Tlist_File_Fold_Auto_Close = 1
-map <C-t> :TlistToggle<CR>
-imap <C-t> <c-o>:TlistToggle<CR>
-
-"
 " NERD_Tree
 map <C-o>   :NERDTreeToggle<CR>
 
+"
+" Tagbar
+nmap <C-t>  :TagbarToggle<CR>
 "
 " Easy Motion
 let mapleader=","
