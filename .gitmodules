@@ -13,9 +13,6 @@
 [submodule "bundle/nerdtree"]
 	path = bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
-[submodule "bundle/cureErrorMarker"]
-	path = bundle/cureErrorMarker
-	url = https://github.com/Twinside/vim-cuteErrorMarker
 [submodule "bundle/vim-flake8"]
 	path = bundle/vim-flake8
 	url = https://github.com/nvie/vim-flake8
