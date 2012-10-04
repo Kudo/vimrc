@@ -84,8 +84,6 @@ set smartcase       "ignore case if search pattern is all lowercase,case-sensiti
 if &term =~ "xterm"
   set ttymouse=xterm2                  
 endif
-
-"
 set background=dark
 syntax on
 set t_Co=256
@@ -96,6 +94,9 @@ hi Search      term=reverse ctermbg=4 ctermfg=7
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Binding
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let mapleader = ","
+let g:mapleader = ","
+
 map <C-a>      0
 map <C-e>      $
 map <C-u>      :set fileencoding=utf-8<CR>
@@ -208,12 +209,23 @@ map <C-o>   :NERDTreeToggle<CR>
 
 "
 " Tagbar
-nmap <C-t>  :TagbarToggle<CR>
+nnoremap <silent> <C-t>  :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+
 "
-" Easy Motion
-let mapleader=","
-let g:mapleader=","
+" AutoClose
+" Inserts matching bracket, paren, brace or quote 
+" fixed the arrow key problems caused by AutoClose
 
 "
 " Powerline
 let g:Powerline_symbols = 'fancy'        " Require patched font "
+
+"
+" SuperTab
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+
+"
+"
