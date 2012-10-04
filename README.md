@@ -61,7 +61,7 @@ PLUGINS
 * [pep8-indent](https://github.com/hynek/vim-python-pep8-indent.git): fix vim default terrible auto indent  
 * [pydoc.vim](https://github.com/fs111/pydoc.vim): python doc  
     `K` show document according to current cursor  
-    map `K` to `<F1>`  
+
 * [flake8](https://github.com/nvie/vim-flake8): python syntax checking and format checking  
     `<F7>` show checking result  
   
