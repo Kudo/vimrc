@@ -67,3 +67,6 @@
 [submodule "bundle/clang_complete"]
 	path = bundle/clang_complete
 	url = git://github.com/Rip-Rip/clang_complete.git
+[submodule "bundle/ag.vim"]
+	path = bundle/ag.vim
+	url = git://github.com/rking/ag.vim.git
