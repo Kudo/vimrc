@@ -226,6 +226,7 @@ let g:tagbar_autofocus = 1
 
 "
 " Powerline
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 let g:Powerline_symbols = 'fancy'        " Require patched font "
 
 "
