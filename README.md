@@ -8,7 +8,7 @@ INSTALL
 
         git clone git://github.com/Kudo/vimrc.git ~/.vim
         cd ~/.vim
-        git submodule update --init
+        git submodule update --init --recursive
 
 2. Install ~/.vimrc
 
