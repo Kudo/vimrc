@@ -189,7 +189,6 @@ let javascript_enable_domhtmlcss=1
 
 "
 " Python
-autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType python setlocal expandtab smarttab autoindent shiftwidth=4 tabstop=4 softtabstop=4 fdm=indent
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``            " Auto trim tail space
 " python.vim: syntax highlight
