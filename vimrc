@@ -232,7 +232,7 @@ let g:Powerline_symbols = 'fancy'        " Require patched font "
 " Neocomplcache & Neosnippet
 let g:neocomplcache_enable_at_startup = 1
 imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" :
+smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 let g:neocomplcache_force_overwrite_completefunc = 1
 if !exists('g:neocomplcache_omni_functions')
   let g:neocomplcache_omni_functions = {}
