@@ -187,6 +187,9 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 let javascript_enable_domhtmlcss=1
 
+" Coffeescript
+autocmd FileType coffee setlocal expandtab smarttab autoindent shiftwidth=2 tabstop=2 softtabstop=2
+
 "
 " Python
 autocmd FileType python setlocal expandtab smarttab autoindent shiftwidth=4 tabstop=4 softtabstop=4 fdm=indent
@@ -196,10 +199,13 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``            " Auto trim tail sp
 " help key mapping
 "autocmd FileType python map <F1> K
 "autocmd FileType python imap <F1> <ESC>K
-" flake8: ignore E501 line too long
-let g:flake8_ignore="E501,W391"
 " auto complete
 "let g:pydiction_location='~/.vim/bundle/pydiction/complete-dict'
+
+"
+" Plim
+autocmd FileType plim setlocal expandtab smarttab autoindent shiftwidth=2 tabstop=2 softtabstop=2
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin
@@ -231,8 +237,15 @@ let g:Powerline_symbols = 'fancy'        " Require patched font "
 "
 " Neocomplcache & Neosnippet
 let g:neocomplcache_enable_at_startup = 1
-imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+"smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>"
+        function! s:check_back_space()"{{{
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1] =~ '\s'
+        endfunction"}}
 let g:neocomplcache_force_overwrite_completefunc = 1
 if !exists('g:neocomplcache_omni_functions')
   let g:neocomplcache_omni_functions = {}
@@ -243,7 +256,14 @@ endif
 let g:neocomplcache_force_overwrite_completefunc = 1
 let g:neocomplcache_force_omni_patterns['python'] = '[^. \t]\.\w*'
 au FileType python let b:did_ftplugin = 1
+let g:neocomplcache_disable_auto_complete = 1
+" For snippet_complete marker.
+if has('conceal')
+    set conceallevel=2 concealcursor=i
+endif
+let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+
 
 "
 " Jedi-vim
