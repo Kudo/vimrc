@@ -79,3 +79,9 @@
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = git://github.com/scrooloose/syntastic.git
+[submodule "bundle/vimproc"]
+	path = bundle/vimproc
+	url = git@github.com:Shougo/vimproc.vim.git
+[submodule "bundle/unite.vim"]
+	path = bundle/unite.vim
+	url = git@github.com:Shougo/unite.vim.git

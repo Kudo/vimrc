@@ -281,3 +281,16 @@ let g:clang_use_library = 1
 " vim-colors-solarized
 "
 colorscheme solarized
+
+"
+" unite.vim
+"
+nnoremap <C-p> :Unite bookmark file_mru file_rec/async:~/01_Work<cr>
+nnoremap <space>/ :Unite grep:~/01_Work<cr>
+let g:unite_enable_start_insert = 1
+if executable('ag')
+    " Use ag in unite grep source.
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts = '--nocolor --nogroup --column'
+    let g:unite_source_grep_recursive_opt = ''
+endif
