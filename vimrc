@@ -170,6 +170,7 @@ autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 "
 " CSS
 autocmd FileType css setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
+autocmd FileType stylus setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 "
 " PHP
@@ -217,7 +218,7 @@ call pathogen#infect()
  
 "
 " NERD_Tree
-map <C-o>   :NERDTreeToggle<CR>
+map <C-o>   :NERDTreeTabsToggle<CR>
 
 "
 " Tagbar
