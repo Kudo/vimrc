@@ -40,9 +40,6 @@
 [submodule "bundle/vim-javascript"]
 	path = bundle/vim-javascript
 	url = git://github.com/pangloss/vim-javascript.git
-[submodule "bundle/clang_complete"]
-	path = bundle/clang_complete
-	url = git://github.com/Rip-Rip/clang_complete.git
 [submodule "bundle/ag.vim"]
 	path = bundle/ag.vim
 	url = git://github.com/rking/ag.vim.git
@@ -52,18 +49,6 @@
 [submodule "bundle/powerline"]
 	path = bundle/powerline
 	url = git://github.com/Lokaltog/powerline.git
-[submodule "bundle/vim-snippets"]
-	path = bundle/vim-snippets
-	url = git://github.com/honza/vim-snippets.git
-[submodule "bundle/jedi-vim"]
-	path = bundle/jedi-vim
-	url = git://github.com/davidhalter/jedi-vim.git
-[submodule "bundle/neosnippet"]
-	path = bundle/neosnippet
-	url = git://github.com/Shougo/neosnippet.git
-[submodule "bundle/neocomplcache"]
-	path = bundle/neocomplcache
-	url = git://github.com/Shougo/neocomplcache.git
 [submodule "bundle/vim-plim"]
 	path = bundle/vim-plim
 	url = git://github.com/keitheis/vim-plim.git
@@ -103,3 +88,12 @@
 [submodule "bundle/neomru.vim"]
 	path = bundle/neomru.vim
 	url = https://github.com/Shougo/neomru.vim.git
+[submodule "bundle/YouCompleteMe"]
+	path = bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule "bundle/vim-snippets"]
+	path = bundle/vim-snippets
+	url = https://github.com/honza/vim-snippets.git
+[submodule "bundle/ultisnips"]
+	path = bundle/ultisnips
+	url = git://github.com/SirVer/ultisnips.git

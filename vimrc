@@ -234,49 +234,17 @@ let g:tagbar_autofocus = 1
 " Powerline
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 let g:Powerline_symbols = 'fancy'        " Require patched font "
+set guifont=Monaco\ for\ Powerline:h12
 
 "
-" Neocomplcache & Neosnippet
-let g:neocomplcache_enable_at_startup = 1
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-"smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>"
-        function! s:check_back_space()"{{{
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1] =~ '\s'
-        endfunction"}}
-let g:neocomplcache_force_overwrite_completefunc = 1
-if !exists('g:neocomplcache_omni_functions')
-  let g:neocomplcache_omni_functions = {}
-endif
-if !exists('g:neocomplcache_force_omni_patterns')
-  let g:neocomplcache_force_omni_patterns = {}
-endif
-let g:neocomplcache_force_overwrite_completefunc = 1
-let g:neocomplcache_force_omni_patterns['python'] = '[^. \t]\.\w*'
-au FileType python let b:did_ftplugin = 1
-let g:neocomplcache_disable_auto_complete = 1
-" For snippet_complete marker.
-if has('conceal')
-    set conceallevel=2 concealcursor=i
-endif
-let g:neosnippet#enable_snipmate_compatibility = 1
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<f6>"
 
 "
-" Jedi-vim
-let g:jedi#popup_on_dot = 0
-
-"
-" clang_complete
-let g:clang_complete_copen = 1
-let g:clang_periodic_quickfix = 1
-let g:clang_snippets = 1
-let g:clang_close_preview = 1
-let g:clang_use_library = 1
+" YouCompleteMe
+let g:ycm_key_list_select_completion=[]
+let g:ycm_key_list_previous_completion=[]
 
 "
 " vim-colors-solarized
