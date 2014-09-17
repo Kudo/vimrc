@@ -218,7 +218,7 @@ call pathogen#infect()
  
 "
 " NERD_Tree
-map <C-o>   :NERDTreeTabsToggle<CR>
+map <C-n>   :NERDTreeTabsToggle<CR>
 
 "
 " Tagbar
@@ -245,6 +245,7 @@ let g:UltiSnipsListSnippets="<f6>"
 " YouCompleteMe
 let g:ycm_key_list_select_completion=[]
 let g:ycm_key_list_previous_completion=[]
+nnoremap <leader>gd :YcmCompleter GoTo<CR>
 
 "
 " vim-colors-solarized
