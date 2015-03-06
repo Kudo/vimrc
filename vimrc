@@ -12,6 +12,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 set backspace=indent,eol,start         " allow backspacing over everything in insert mode
+set re=1
 set history=50
 set showcmd
 set nowrap
@@ -161,11 +162,12 @@ autocmd FileType Makefile set noexpandtab    "disable tab replacement on Makefil
 
 "
 " Ruby
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+let g:ruby_path = system('rvm current')
+"autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType ruby setlocal expandtab autoindent shiftwidth=2 tabstop=2 softtabstop=2
  
 "
 " CSS
@@ -264,3 +266,8 @@ if executable('ag')
     let g:unite_source_grep_default_opts = '--nocolor --nogroup --column'
     let g:unite_source_grep_recursive_opt = ''
 endif
+
+"
+" syntastic
+"
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
