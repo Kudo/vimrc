@@ -100,3 +100,6 @@
 [submodule "bundle/vim-jsx"]
 	path = bundle/vim-jsx
 	url = https://github.com/mxw/vim-jsx.git
+[submodule "bundle/CoffeeTags"]
+	path = bundle/CoffeeTags
+	url = https://github.com/lukaszkorecki/CoffeeTags.git
