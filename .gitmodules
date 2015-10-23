@@ -106,3 +106,6 @@
 [submodule "bundle/vim-apiblueprint"]
 	path = bundle/vim-apiblueprint
 	url = https://github.com/kylef/apiblueprint.vim.git
+[submodule "bundle/editorconfig-vim"]
+	path = bundle/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim.git
