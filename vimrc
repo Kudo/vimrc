@@ -107,8 +107,6 @@ let g:mapleader = ","
 
 map <C-a>      0
 map <C-e>      $
-map <C-u>      :set fileencoding=utf-8<CR>
-map <C-b>      :set fileencoding=big5<CR>
 
 
 " Tab for vim7
@@ -155,6 +153,7 @@ autocmd BufReadPost *
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType xhtml set omnifunc=xhtmlcomplete#CompleteTags
 autocmd FileType html,xhtml setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType c set omnifunc=ccomplete#Complete
@@ -250,6 +249,14 @@ let g:ycm_key_list_previous_completion=[]
 nnoremap <leader>gd :YcmCompleter GoTo<CR>
 
 "
+" CoffeeTags
+let g:CoffeeAutoTagFile="/var/tmp/CoffeeTags"
+
+"
+" vim-jsx
+let g:jsx_ext_required = 0
+
+"
 " vim-colors-solarized
 "
 colorscheme solarized
@@ -257,8 +264,8 @@ colorscheme solarized
 "
 " unite.vim
 "
-nnoremap <C-p> :Unite bookmark file_mru file_rec/async:~/01_Work<cr>
-nnoremap <space>/ :Unite grep:~/01_Work<cr>
+nnoremap <C-p> :Unite bookmark file_mru file_rec/git<cr>
+nnoremap <space>/ :Unite grep:~/01_Work/Repos<cr>
 let g:unite_enable_start_insert = 1
 if executable('ag')
     " Use ag in unite grep source.
@@ -271,3 +278,4 @@ endif
 " syntastic
 "
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_javascript_checkers = ['eslint']

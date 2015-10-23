@@ -103,3 +103,6 @@
 [submodule "bundle/CoffeeTags"]
 	path = bundle/CoffeeTags
 	url = https://github.com/lukaszkorecki/CoffeeTags.git
+[submodule "bundle/vim-apiblueprint"]
+	path = bundle/vim-apiblueprint
+	url = https://github.com/kylef/apiblueprint.vim.git
