@@ -12,7 +12,7 @@ INSTALL
 
 2. Install ~/.vimrc
 
-        cd $HOME && ln -s .vimrc/vimrc .vimrc
+        cd $HOME && ln -s .vim/vimrc .vimrc
 
 Requirements
 -------

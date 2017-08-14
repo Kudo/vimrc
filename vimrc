@@ -21,8 +21,8 @@ set ruler
 set nomodeline
 "set nocursorline
 set laststatus=2
-set statusline=\ %{HasPaste()}%-20.(%f\ %m%r%h\ %w%)\ 
-set statusline+=\ %<%30(\ \ \ %{hostname()}:%{CurDir()}%)\ 
+set statusline=\ %{HasPaste()}%-20.(%f\ %m%r%h\ %w%)\
+set statusline+=\ %<%30(\ \ \ %{hostname()}:%{CurDir()}%)\
 set statusline+=%=\ [%c%V,\ %l/%L]\ [%{&ff}/%{&fileencoding}/%Y]
 function! CurDir()
     let curdir = substitute(getcwd(), $HOME, "~", "")
@@ -83,7 +83,7 @@ set smartcase       "ignore case if search pattern is all lowercase,case-sensiti
 " Terminal
 "set   term=xterm-color
 if &term =~ "xterm"
-  set ttymouse=xterm2                  
+  set ttymouse=xterm2
 endif
 if &term =~ '^screen'
     " tmux will send xterm-style keys when its xterm-keys option is on
@@ -111,7 +111,7 @@ map <C-e>      $
 
 " Tab for vim7
 "set showtabline=1
-map <C-d>      :tabc<CR>       
+map <C-d>      :tabc<CR>
 map <S-Left>   :tabp<CR>
 map <S-Right>  :tabn<CR>
 
@@ -147,7 +147,7 @@ autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal g`\"" |
   \ endif
- 
+
 "
 " Misc
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -167,7 +167,7 @@ autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby setlocal expandtab autoindent shiftwidth=2 tabstop=2 softtabstop=2
- 
+
 "
 " CSS
 autocmd FileType css setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
@@ -178,7 +178,7 @@ autocmd FileType stylus setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 set foldmethod=syntax
 let php_folding=2
- 
+
 "
 " Perl
 " highlight advanced perl vars inside strings
@@ -186,7 +186,9 @@ let perl_extended_vars=1
 
 " Javascript
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+" autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --print-width\ 100\ --single-quote\ --trailing-comma\ es5
+autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
 let javascript_enable_domhtmlcss=1
 
 " Coffeescript
@@ -204,53 +206,87 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``            " Auto trim tail sp
 " auto complete
 "let g:pydiction_location='~/.vim/bundle/pydiction/complete-dict'
 
-"
-" Plim
-autocmd FileType plim setlocal expandtab smarttab autoindent shiftwidth=2 tabstop=2 softtabstop=2
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-" vim-pathogen
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
- 
+"
+call plug#begin('~/.vim/plugged')
+
+"Plug 'powerline/powerline', { 'rtp': 'powerline/bindings/vim' }
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'altercation/vim-colors-solarized'
+
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --gocode-completer --tern-completer' }
+Plug 'mileszs/ack.vim'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'easymotion/vim-easymotion'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+Plug 'tmhedberg/matchit'
+Plug 'vim-syntastic/syntastic'
+Plug 'majutsushi/tagbar'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'chrisbra/vim-diff-enhanced'
+Plug 'alvan/vim-closetag'
+
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'flowtype/vim-flow', { 'for': 'javascript' }
+
+Plug 'ap/vim-css-color'
+"Plug 'hail2u/vim-css3-syntax'
+
+"Plug 'fatih/vim-go', { 'for': 'go' }
+
+
+call plug#end()
+
+"
+" ack.vim
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
+
 "
 " NERD_Tree
-map <C-n>   :NERDTreeTabsToggle<CR>
+map <C-n>   :NERDTreeToggle<CR>
 
 "
 " Tagbar
 nnoremap <silent> <C-t>  :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
+let g:tagbar_type_javascript = {
+\ 'ctagsbin' : 'jsctags'
+\ }
 
 "
-" AutoClose
-" Inserts matching bracket, paren, brace or quote 
-" fixed the arrow key problems caused by AutoClose
-
 "
 " Powerline
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-let g:Powerline_symbols = 'fancy'        " Require patched font "
-set guifont=Monaco\ for\ Powerline:h12
+"set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+"let g:Powerline_symbols = 'fancy'        " Require patched font "
+"set guifont=Monaco\ for\ Powerline:h12
+
+"
+" Airline
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'solarized'
 
 "
 " UltiSnips
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsListSnippets="<f6>"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsListSnippets="<f6>"
 
 "
 " YouCompleteMe
+"let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_key_list_select_completion=[]
 let g:ycm_key_list_previous_completion=[]
 nnoremap <leader>gd :YcmCompleter GoTo<CR>
-
-"
-" CoffeeTags
-let g:CoffeeAutoTagFile="/var/tmp/CoffeeTags"
 
 "
 " vim-jsx
@@ -264,14 +300,15 @@ colorscheme solarized
 "
 " unite.vim
 "
-nnoremap <C-p> :Unite bookmark file_mru file_rec/git<cr>
-nnoremap <space>/ :Unite grep:~/01_Work/Repos<cr>
+" nnoremap <C-p> :Unite bookmark file_mru file_rec/git file_rec/async:/Users/kudo/01_Work/Repos<cr>
+" nnoremap <space>/ :Unite grep:/Users/kudo/01_Work/Repos<cr>
 let g:unite_enable_start_insert = 1
 if executable('ag')
     " Use ag in unite grep source.
     let g:unite_source_grep_command = 'ag'
     let g:unite_source_grep_default_opts = '--nocolor --nogroup --column'
     let g:unite_source_grep_recursive_opt = ''
+    let g:unite_source_rec_async_command = [ 'ag', '-l', '-g', '', '--nocolor' ]
 endif
 
 "
@@ -279,8 +316,84 @@ endif
 "
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 let g:syntastic_javascript_checkers = ['eslint']
+let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
+let b:syntastic_javascript_eslint_exec = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
 
 "
 " editorconfig
 "
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
+"
+" fzf
+"
+set rtp+=/usr/local/opt/fzf
+let g:fzf_layout = { 'up': '~40%' }
+nnoremap <C-p> :GFiles<cr>
+nnoremap <space>/ :Ag<Space>
+
+"
+" vim-javascript
+"
+let g:javascript_plugin_flow = 1
+
+"
+" vim-flow
+"
+let g:flow#autoclose = 1
+
+"
+" vim-closetag
+"
+let g:closetag_filenames = '*.html,*.js'
+
+" ----------------------------------------------------------------------------
+" Cscope mappings
+" Ref: https://github.com/junegunn/dotfiles/blob/master/vimrc
+" ----------------------------------------------------------------------------
+function! s:add_cscope_db()
+  " add any database in current directory
+  let db = findfile('cscope.out', '.;')
+  if !empty(db)
+    silent cs reset
+    silent! execute 'cs add' db
+  " else add database pointed to by environment
+  elseif !empty($CSCOPE_DB)
+    silent cs reset
+    silent! execute 'cs add' $CSCOPE_DB
+  endif
+endfunction
+
+if has("cscope")
+  set csprg=/usr/local/bin/cscope
+  set csto=0
+  set cst
+  set nocsverb
+  set csverb
+  call s:add_cscope_db()
+
+  "   's'   symbol: find all references to the token under cursor
+  "   'g'   global: find global definition(s) of the token under cursor
+  "   'c'   calls:  find all calls to the function name under cursor
+  "   't'   text:   find all instances of the text under cursor
+  "   'e'   egrep:  egrep search for the word under cursor
+  "   'f'   file:   open the filename under cursor
+  "   'i'   includes: find files that include the filename under cursor
+  "   'd'   called: find functions that function under cursor calls
+  nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+  xnoremap <C-\>t y:cs find t <C-R>"<CR>
+  " nnoremap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+  " nnoremap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+  nnoremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+  " extends
+  nnoremap <C-\>e :cs find t extends <C-R>=expand("<cword>")<CR><CR>
+  " implements
+  nnoremap <C-\>i :cs find t implements <C-R>=expand("<cword>")<CR><CR>
+  " new
+  nnoremap <C-\>n :cs find t new <C-R>=expand("<cword>")<CR><CR>
+endif
