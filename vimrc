@@ -187,8 +187,6 @@ let perl_extended_vars=1
 " Javascript
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 " autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --print-width\ 100\ --single-quote\ --trailing-comma\ es5
-autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
 let javascript_enable_domhtmlcss=1
 
 " Coffeescript
@@ -219,13 +217,19 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'altercation/vim-colors-solarized'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --gocode-completer --tern-completer' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+
 Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'easymotion/vim-easymotion'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
+
 Plug 'tmhedberg/matchit'
 Plug 'vim-syntastic/syntastic'
 Plug 'majutsushi/tagbar'
@@ -233,8 +237,12 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'alvan/vim-closetag'
 
+Plug 'rhysd/vim-clang-format', { 'for': 'cpp' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'prettier/vim-prettier', {
+    \ 'do': 'yarn install',
+    \ 'for': ['javascript'] }
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 
 Plug 'ap/vim-css-color'
@@ -330,7 +338,15 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 set rtp+=/usr/local/opt/fzf
 let g:fzf_layout = { 'up': '~40%' }
 nnoremap <C-p> :GFiles<cr>
+" nnoremap <C-p> :FZF<cr>
 nnoremap <space>/ :Ag<Space>
+
+"
+" clang-format
+"
+let g:clang_format#detect_style_file = 1
+" let g:clang_format#auto_format_on_insert_leave = 1
+autocmd BufRead,BufNewFile */01_Work/Repos/* let g:clang_format#auto_format = 1
 
 "
 " vim-javascript
@@ -341,6 +357,18 @@ let g:javascript_plugin_flow = 1
 " vim-flow
 "
 let g:flow#autoclose = 1
+
+"
+" vim-prettier
+"
+let g:prettier#config#print_width = 100
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#trailing_comma = 'es5'
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#jsx_bracket_same_line = 'false'
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
 
 "
 " vim-closetag
