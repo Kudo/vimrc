@@ -214,13 +214,15 @@ call plug#begin('~/.vim/plugged')
 "Plug 'powerline/powerline', { 'rtp': 'powerline/bindings/vim' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --gocode-completer --tern-completer' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --gocode-completer --tern-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --gocode-completer' }
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 
 Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdcommenter'
 Plug 'easymotion/vim-easymotion'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
@@ -250,6 +252,7 @@ Plug 'ap/vim-css-color'
 
 "Plug 'fatih/vim-go', { 'for': 'go' }
 
+Plug 'fcamel/gj'
 
 call plug#end()
 
@@ -262,6 +265,13 @@ endif
 "
 " NERD_Tree
 map <C-n>   :NERDTreeToggle<CR>
+
+"
+" NERD_Commenter
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
 
 "
 " Tagbar
@@ -301,9 +311,10 @@ nnoremap <leader>gd :YcmCompleter GoTo<CR>
 let g:jsx_ext_required = 0
 
 "
-" vim-colors-solarized
+" vim-solarized8
 "
-colorscheme solarized
+set termguicolors
+colorscheme solarized8_flat
 
 "
 " unite.vim
@@ -325,7 +336,7 @@ endif
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 let g:syntastic_javascript_checkers = ['eslint']
 let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
-let b:syntastic_javascript_eslint_exec = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
+let g:syntastic_javascript_eslint_exec = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
 
 "
 " editorconfig
@@ -337,6 +348,20 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 "
 set rtp+=/usr/local/opt/fzf
 let g:fzf_layout = { 'up': '~40%' }
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 nnoremap <C-p> :GFiles<cr>
 " nnoremap <C-p> :FZF<cr>
 nnoremap <space>/ :Ag<Space>
@@ -345,8 +370,8 @@ nnoremap <space>/ :Ag<Space>
 " clang-format
 "
 let g:clang_format#detect_style_file = 1
-" let g:clang_format#auto_format_on_insert_leave = 1
-autocmd BufRead,BufNewFile */01_Work/Repos/* let g:clang_format#auto_format = 1
+autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
+nnoremap <Leader>cf :ClangFormat<CR>
 
 "
 " vim-javascript
@@ -357,18 +382,20 @@ let g:javascript_plugin_flow = 1
 " vim-flow
 "
 let g:flow#autoclose = 1
+"Use locally installed flow
+let local_flow = finddir('node_modules', '.;') . '/.bin/flow'
+if matchstr(local_flow, "^\/\\w") == ''
+    let local_flow = getcwd() . "/" . local_flow
+endif
+if executable(local_flow)
+  let g:flow#flowpath = local_flow
+endif
 
 "
 " vim-prettier
 "
-let g:prettier#config#print_width = 100
-let g:prettier#config#single_quote = 'true'
-let g:prettier#config#trailing_comma = 'es5'
-let g:prettier#config#single_quote = 'true'
-let g:prettier#config#bracket_spacing = 'true'
-let g:prettier#config#jsx_bracket_same_line = 'false'
 let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.graphql,*.md,*.vue PrettierAsync
 
 "
 " vim-closetag
